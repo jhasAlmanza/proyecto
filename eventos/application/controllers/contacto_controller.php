@@ -68,12 +68,42 @@ class contacto_controller extends CI_Controller {
 
   function noticias(){
 
-    $this->load->model('registro_model');
+   /* $this->load->model('registro_model');
       $datos =  array(
         'noticias' => $this->registro_model->vernoticias(),
-      );
+      ); */
+      
+      $this->load->library('pagination');
+      $config['base_url']="http://localhost/proyecto/eventos/index.php/contacto_controller/noticias";
+      $config['per_page']=3;
+      $config['num_links']=5;
+      $config['total_rows']=$this->db->get('noticias')->num_rows();
+      $config['uri_segment'] = 3;
+      
+      $config['full_tag_open'] = "<ul class='pagination'>";
+      $config['full_tag_close'] ="</ul>";
+      $config['num_tag_open'] = '<li>';
+      $config['num_tag_close'] = '</li>';
+      $config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
+      $config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+      $config['next_tag_open'] = "<li>";
+      $config['next_tagl_close'] = "</li>";
+      $config['prev_tag_open'] = "<li>";
+      $config['prev_tagl_close'] = "</li>";
+      $config['first_tag_open'] = "<li>";
+      $config['first_tagl_close'] = "</li>";
+      $config['last_tag_open'] = "<li>";
+      $config['last_tagl_close'] = "</li>";
+      
+      $this->pagination->initialize($config);
+      $data['paginglinks'] = $this->pagination->create_links();
+      
+      $data['query']=$this->db->get('noticias',  $config['per_page'],  $config['uri_segment'] );
+      
+      
+      
      $this->load->view('header_view');
-     $this->load->view('noticias_view', $datos);
+     $this->load->view('noticias_view', $data);
      $this->load->view('footer_view');
   }
 

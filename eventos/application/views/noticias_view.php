@@ -1,8 +1,8 @@
     <div class="container">
       <div class="row">
            <?php 
-            if($noticias != FALSE){
-                foreach ($noticias->result() as $row) {
+           if($query != FALSE){
+                foreach ($query->result() as $row) {
                   ?>
                   <div class="col-md-8">
                    <h1 class="titulo my-4"><?=$row->titulo?>
@@ -29,11 +29,16 @@
                 </div>
                   <?php
                 }
+                
+                
             }else{
               echo "NO EXISTEN LOS DATOS EN LA BASE DE DATOS";
             }
             ?>
       </div>
+     <div id="pagination">
+    <?php echo $paginglinks;?>
+</div>
     </div>
 <div>
          <a href="<?php base_url()?>/eventos/index.php/principal"><button class="btn-success btn"><i class="fas fa-arrow-circle-left"></i> Volver</button></a>                   
